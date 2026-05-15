@@ -29,3 +29,19 @@ st.write(f"선택한 역: {selected_station}")
 
 st.subheader("선택한 역 데이터")
 st.dataframe(station_df)
+
+
+# 요일 선택
+day_list = sorted(station_df["요일구분"].dropna().unique())
+selected_day = st.selectbox("요일을 선택하세요", day_list)
+
+# 선택한 노선 + 역 + 요일에 해당하는 데이터 필터링
+day_df = station_df[station_df["요일구분"] == selected_day]
+
+st.subheader("선택한 조건")
+st.write(f"선택한 노선: {selected_line}")
+st.write(f"선택한 역: {selected_station}")
+st.write(f"선택한 요일: {selected_day}")
+
+st.subheader("선택한 요일 데이터")
+st.dataframe(day_df)
