@@ -34,12 +34,11 @@ day_df = station_df[station_df["요일구분"] == selected_day]
 
 #상하구분 선택
 
-direction_list = sorted(station_df["상하구분"].dropna().unique())
+direction_list = sorted(day_df["상하구분"].dropna().unique())
 selected_direction = st.selectbox("상하구분을 선택하세요", direction_list)
 
 # 선택한 노선 + 역 + 상하구분에 해당하는 데이터 필터링
-direction_df = station_df[station_df["상하구분"] == selected_direction]
-
+direction_df = day_df[day_df["상하구분"] == selected_direction]
 
 
 
