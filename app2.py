@@ -53,6 +53,9 @@ st.dataframe(direction_df)
 
 
 
+
+
+
 #혼잡도 그래프 시각화
 import matplotlib.pyplot as plt
 
@@ -75,5 +78,8 @@ plt.plot(x_values, y_values, marker="o")
 plt.title(f"{selected_line} {selected_station} {selected_day} {selected_direction} 혼잡도")
 plt.xlabel("시간대")
 plt.ylabel("혼잡도")
-plt.xticks(rotation=45)
+plt.xticks(rotation=45) #x축 레이블을 45도 회전하여 겹치지 않도록 설정
 st.pyplot(plt)
+
+
+#streamlit 실행법: python -m streamlit run app2.py :)
