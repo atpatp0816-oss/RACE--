@@ -34,11 +34,11 @@ day_df = station_df[station_df["요일구분"] == selected_day]
 
 #상하구분 선택
 
-direction_list = sorted(station_df["상하구분"].dropna().unique())
+direction_list = sorted(day_df["상하구분"].dropna().unique())
 selected_direction = st.selectbox("상하구분을 선택하세요", direction_list)
 
 # 선택한 노선 + 역 + 상하구분에 해당하는 데이터 필터링
-direction_df = station_df[station_df["상하구분"] == selected_direction]
+direction_df = day_df[day_df["상하구분"] == selected_direction]
 
 
 
@@ -51,3 +51,29 @@ st.write(f"선택한 상하구분: {selected_direction}")
 st.subheader("선택한 조건의 원본 데이터")
 st.dataframe(direction_df)
 
+
+
+#혼잡도 그래프 시각화
+import matplotlib.pyplot as plt
+
+
+#한글 폰트 설정(Windows의 경우 "Malgun Gothic" 사용)(글자가 안깨지게 설정)
+plt.rcParams["font.family"] = "Malgun Gothic"
+plt.rcParams["axes.unicode_minus"] = False
+
+
+
+x_values=[]
+y_values=[]
+info_columns = ["요일구분", "호선", "역번호", "출발역", "상하구분"]
+for column in df.columns:
+    if column not in info_columns:
+        y_values.append(direction_df[column].values[0])
+        x_values.append(column)
+plt.figure(figsize=(10, 5))
+plt.plot(x_values, y_values, marker="o")
+plt.title(f"{selected_line} {selected_station} {selected_day} {selected_direction} 혼잡도")
+plt.xlabel("시간대")
+plt.ylabel("혼잡도")
+plt.xticks(rotation=45)
+st.pyplot(plt)
