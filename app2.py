@@ -41,8 +41,6 @@ selected_direction = st.selectbox("상하구분을 선택하세요", direction_l
 direction_df = day_df[day_df["상하구분"] == selected_direction]
 
 
-
-
 st.subheader("선택한 조건")
 st.write(f"선택한 노선: {selected_line}")
 st.write(f"선택한 역: {selected_station}")
@@ -50,9 +48,6 @@ st.write(f"선택한 요일: {selected_day}")
 st.write(f"선택한 상하구분: {selected_direction}")
 st.subheader("선택한 조건의 원본 데이터")
 st.dataframe(direction_df)
-
-
-
 
 
 
@@ -81,5 +76,49 @@ plt.ylabel("혼잡도")
 plt.xticks(rotation=45) #x축 레이블을 45도 회전하여 겹치지 않도록 설정
 st.pyplot(plt)
 
+
+
+# 혼잡도 등급 분류 함수
+def classify_congestion(value):
+    if value <= 25:
+        return "여유"
+    elif value <= 50:
+        return "보통"
+    elif value <= 75:
+        return "주의"
+    else:
+        return "혼잡"
+
+
+# 등급별 색상 지정 함수
+def color_congestion_level(level):
+    if level == "여유":
+        return "background-color: #d9fdd3"
+    elif level == "보통":
+        return "background-color: #d6eaff"
+    elif level == "주의":
+        return "background-color: #fff3cd"
+    elif level == "혼잡":
+        return "background-color: #f8d7da"
+    else:
+        return ""
+
+# x_values, y_values를 이용해서 새 표 생성
+congestion_table = pd.DataFrame({
+    "시간대": x_values,
+    "혼잡도": y_values
+})
+
+# 여기서 classify_congestion 함수가 호출됨
+congestion_table["등급"] = congestion_table["혼잡도"].apply(classify_congestion)
+
+# 여기서 color_congestion_level 함수가 호출됨
+styled_table = congestion_table.style.map(
+    color_congestion_level,
+    subset=["등급"]
+)
+
+st.subheader("시간대별 혼잡도 등급표")
+st.dataframe(styled_table)
 
 #streamlit 실행법: python -m streamlit run app2.py :)
