@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.graph_objects as go
 from datetime import datetime
 import pytz
+import time
 
 st.title("서울 지하철 혼잡도 분석 대시보드")
 
@@ -123,3 +124,7 @@ fig.update_layout(
     hovermode="x unified",
 )
 st.plotly_chart(fig, use_container_width=True)
+
+# 10초마다 자동 새로고침
+time.sleep(10)
+st.rerun()
