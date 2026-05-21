@@ -61,11 +61,6 @@ direction_list = sorted(day_df["상하구분"].dropna().unique())
 selected_direction = st.selectbox("상하구분을 선택하세요", direction_list)
 direction_df = day_df[day_df["상하구분"] == selected_direction]
 
-<<<<<<< HEAD
-
-=======
-# 선택한 조건 표시
->>>>>>> 05cecaf4c0bf154dea08d508dc432113ad9e58fc
 st.subheader("선택한 조건")
 st.write(f"선택한 노선: {selected_line}")
 st.write(f"선택한 역: {selected_station}")
@@ -129,23 +124,7 @@ fig.update_layout(
 )
 st.plotly_chart(fig, use_container_width=True)
 
-<<<<<<< HEAD
 
-
-x_values=[]
-y_values=[]
-info_columns = ["요일구분", "호선", "역번호", "출발역", "상하구분"]
-for column in df.columns:
-    if column not in info_columns:
-        y_values.append(direction_df[column].values[0])
-        x_values.append(column)
-plt.figure(figsize=(10, 5))
-plt.plot(x_values, y_values, marker="o")
-plt.title(f"{selected_line} {selected_station} {selected_day} {selected_direction} 혼잡도")
-plt.xlabel("시간대")
-plt.ylabel("혼잡도")
-plt.xticks(rotation=45) #x축 레이블을 45도 회전하여 겹치지 않도록 설정
-st.pyplot(plt)
 
 
 
@@ -176,7 +155,7 @@ def color_congestion_level(level):
 
 # x_values, y_values를 이용해서 새 표 생성
 congestion_table = pd.DataFrame({
-    "시간대": x_values,
+    "시간대": time_columns,
     "혼잡도": y_values
 })
 
@@ -192,9 +171,11 @@ styled_table = congestion_table.style.map(
 st.subheader("시간대별 혼잡도 등급표")
 st.dataframe(styled_table)
 
+
+
+
 #streamlit 실행법: python -m streamlit run app2.py :)
-=======
 # 10초마다 자동 새로고침
 time.sleep(10)
 st.rerun()
->>>>>>> 05cecaf4c0bf154dea08d508dc432113ad9e58fc
+
